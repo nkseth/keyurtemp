@@ -7,7 +7,7 @@ variables:
 
 stages:
   - stage: ci_build_simpleAccounts_io
-    displayName: CI Build for SimpleAccounts-io
+    displayName: CI Build for SimpleAccounts.io
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
