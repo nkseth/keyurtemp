@@ -1,39 +1,61 @@
-# Docker
-# Build and push an image to Azure Container Registry
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
+name: $(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 trigger:
-- develop
-
-resources:
-- repo: self
+  - develop
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'fa1bc457-4dc6-47ee-9a50-c4c7c3ac022e'
-  imageRepository: 'simpleaccounts-io-strapi-frontend'
-  containerRegistry: 'datainn.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
-
-  # Agent VM image name
-  vmImageName: 'azure-devops-vmss'
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
+  - stage: ci_build_simpleAccounts-io
+    displayName: CI Build for SimpleAccounts-io
     pool:
-      name: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: build
+        displayName: Build & Push SimpleAccounts.io Website
+        timeoutInMinutes: 30
+
+        steps:
+          - task: CmdLine@2
+            inputs:
+              script: 'yarn install'
+
+          - task: Cache@2
+            inputs:
+              key: '"yarn" | "$(Agent.OS)" | yarn.lock'
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+              path: $(YARN_CACHE_FOLDER)
+            displayName: Cache Yarn packages
+
+          - script: yarn --frozen-lockfile
+
+
+          - task: Cache@2
+            displayName: Cache task
+            inputs:
+              key: 'docker | "$(Agent.OS)" | cache'
+              path: $(Pipeline.Workspace)/simpleaccounts-io-frontend-docker
+              cacheHitVar: CACHE_RESTORED                #Variable to set to 'true' when the cache is restored
+
+          - script: |
+              docker load -i $(Pipeline.Workspace)/simpleaccounts-io-frontend-docker/simpleaccounts-io-frontend-docker-cache.tar
+            displayName: Docker restore
+            condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
+
+          - task: Docker@2
+            displayName: Docker Build & Push
+            inputs:
+              containerRegistry: 'DataInnAzureContainerRegistryConnection'
+              repository: 'simpleaccounts-io-strapi-frontend'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(tag)
+
+          - script: |
+              mkdir -p $(Pipeline.Workspace)/simpleaccounts-io-frontend-docker
+              docker save -o $(Pipeline.Workspace)/simpleaccounts-io-frontend-docker/simpleaccounts-io-frontend-docker-cache.tar datainn.azurecr.io/simpleaccounts-io-strapi-frontend:$(tag)
+            displayName: Docker save
+            condition: and(not(canceled()), or(failed(), ne(variables.CACHE_RESTORED, 'true')))
+
