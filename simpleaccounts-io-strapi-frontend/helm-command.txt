@@ -1,0 +1,16 @@
+nameserver="simpleaccounts-io-strapi-website"
+maindomain="simpleaccounts.io"
+subdomain="marketplace"
+helmDir="simpleaccounts-io-strapi-frontend"
+
+helm uninstall $subdomain-frontend -n $nameserver
+
+helm rollback $subdomain-frontend 0  -n $nameserver
+
+simpleaccounts-strapi-website/simpleaccounts-io-strapi-frontend/simpleaccounts-io-strapi-frontend.sh install marketplace xyz
+
+simpleaccounts-strapi-website/simpleaccounts-io-strapi-frontend/simpleaccounts-io-strapi-frontend.sh install marketplace latest >> ~/simpleaccounts-io-strapi-frontend-deployment.log
+
+simpleaccounts-strapi-website/simpleaccounts-io-strapi-frontend/update-simpleaccount-frontend-release.bash latest
+
+#Test deployment.

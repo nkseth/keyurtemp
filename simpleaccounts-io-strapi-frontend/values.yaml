@@ -1,0 +1,95 @@
+# Default values for simpleaccounts-io-strapi-frontend.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+nameSpaces: simpleaccounts-io-strapi-website
+image:
+  repository:
+    frontend:
+      imageName: datainn.azurecr.io/simpleaccounts-io-strapi-frontend
+      tag: "latest"
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+
+azureACRServicePrinciple:
+  enabled: false
+
+simpleAccountsFrontendRelease: "latest"
+simpleAccountsBackendHost: "https://strapi-api.simpleaccounts.io"
+simpleAccountsMagicKey: "pk_live_8559E85B12D31517"
+
+ports:
+  containerPort:
+    frontendPort: 80
+imagePullSecrets:
+  - name: az-acr-service-principal-credentials
+nameOverride: ""
+fullnameOverride: "simpleaccounts-io-strapi-frontend"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "deploy-robot-frontend"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 443
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/clusterissuer: simpleaccounts-letsencrypt-prod
+#    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: marketplace.simpleaccounts.io
+      paths: [/*]
+  tls:
+    - secretName: simpleaccounts-io-strapi-website-tls
+      hosts:
+        - marketplace.simpleaccounts.io
+        - www.marketplace.simpleaccounts.io
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
