@@ -30,6 +30,9 @@ stages:
 
           - script: yarn --frozen-lockfile
 
+          - task: CmdLine@2
+            inputs:
+              script: 'yarn build'
 
           - task: Cache@2
             displayName: Cache task
