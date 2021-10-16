@@ -2,7 +2,17 @@ name: $(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd
 trigger:
   - develop
 
+resources:
+- repo: self
+
 variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '65e5d745-6ef4-43b0-a466-4532d1d12b47'
+  imageRepository: 'simpleaccounts-io-strapi-frontend'
+  containerRegistry: 'datainn.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+
   YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 stages:
@@ -47,12 +57,12 @@ stages:
             condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
           - task: Docker@2
-            displayName: Docker Build & Push
+            displayName: Build and push an image to container registry
             inputs:
-              containerRegistry: 'DataInnAzureContainerRegistryConnection'
-              repository: 'simpleaccounts-io-strapi-frontend'
-              command: 'buildAndPush'
-              Dockerfile: '**/Dockerfile'
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
 
