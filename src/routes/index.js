@@ -60,8 +60,17 @@ export default function Router() {
             </GuestGuard>
           )
         },
+	    {
+		  path: 'prospect',
+		  element: (
+			  <GuestGuard>
+				  <Prospect />
+			  </GuestGuard>
+		  )
+	    },
         { path: 'login-unprotected', element: <Login /> },
         { path: 'register-unprotected', element: <Register /> },
+	    { path: 'prospect-unprotected', element: <Prospect /> },
         { path: 'reset-password', element: <ResetPassword /> },
         { path: 'verify', element: <VerifyCode /> }
       ]
@@ -228,6 +237,7 @@ export default function Router() {
 // Authentication
 const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
+const Prospect = Loadable(lazy(() => import('../pages/authentication/Prospect')));
 const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
