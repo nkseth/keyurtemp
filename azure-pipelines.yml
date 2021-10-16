@@ -6,7 +6,7 @@ variables:
   YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 stages:
-  - stage: ci_build_simpleAccounts-io
+  - stage: ci_build_simpleAccounts_io
     displayName: CI Build for SimpleAccounts-io
     pool:
       vmImage: 'ubuntu-latest'
