@@ -44,6 +44,7 @@ stages:
             inputs:
               script: |
                 'yarn add @material-ui/core@next'
+                'yarn add @material-ui/styles@next'
                 'yarn build'
 
           - task: Cache@2
