@@ -28,7 +28,9 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-              script: 'yarn install'
+              script: |
+                yarn install
+                yarn add @material-ui/core@next
 
           - task: Cache@2
             inputs:
@@ -42,9 +44,7 @@ stages:
 
           - task: CmdLine@2
             inputs:
-              script: |
-                'yarn add @material-ui/core@next'
-                'yarn build'
+              script: 'yarn build'
 
           - task: Cache@2
             displayName: Cache task
