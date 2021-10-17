@@ -1,13 +1,8 @@
 import * as Yup from 'yup';
-// import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
-// import eyeFill from '@iconify/icons-eva/eye-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
-// import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-// material
-// import { Stack, TextField, IconButton, InputAdornment, Alert } from '@mui/material';
 import { Stack, TextField, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
@@ -22,26 +17,23 @@ export default function ProspectForm() {
   const { prospect } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  // const [showPassword, setShowPassword] = useState(false);
 
   const ProspectSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    email: Yup.string().email('Email must be a valid email address').required('Email is required')
   });
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
-      email: '',
-      password: ''
+      email: ''
     },
     validationSchema: ProspectSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await prospect(values.email, values.password, values.firstName, values.lastName);
+        await prospect(values.email, values.firstName, values.lastName);
         enqueueSnackbar('Prospect success', {
           variant: 'success',
           action: (key) => (
@@ -98,25 +90,6 @@ export default function ProspectForm() {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-
-          {/*<TextField*/}
-          {/*  fullWidth*/}
-          {/*  autoComplete="current-password"*/}
-          {/*  type={showPassword ? 'text' : 'password'}*/}
-          {/*  label="Password"*/}
-          {/*  {...getFieldProps('password')}*/}
-          {/*  InputProps={{*/}
-          {/*    endAdornment: (*/}
-          {/*      <InputAdornment position="end">*/}
-          {/*        <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>*/}
-          {/*          <Icon icon={showPassword ? eyeFill : eyeOffFill} />*/}
-          {/*        </IconButton>*/}
-          {/*      </InputAdornment>*/}
-          {/*    )*/}
-          {/*  }}*/}
-          {/*  error={Boolean(touched.password && errors.password)}*/}
-          {/*  helperText={touched.password && errors.password}*/}
-          {/*/>*/}
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
             Try Now
