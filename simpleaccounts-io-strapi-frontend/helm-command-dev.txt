@@ -10,6 +10,7 @@ echo "Deployment Dry Run"
 
 helm upgrade --install $subdomain-frontend simpleaccounts-io-strapi-frontend/$helmDir --values simpleaccounts-io-strapi-frontend/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
+--set image.repository.frontend.imageName="datainn.azurecr.io/simpleaccounts-io-strapi-frontend" \
 --set image.repository.frontend.tag=$SVrelease \
 --set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
 --set fullnameOverride=$subdomain-frontend \
