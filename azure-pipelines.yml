@@ -42,7 +42,9 @@ stages:
 
           - task: CmdLine@2
             inputs:
-              script: 'yarn build'
+              script: |
+                'yarn add @material-ui/core/ClickAwayListener'
+                'yarn build'
 
           - task: Cache@2
             displayName: Cache task
