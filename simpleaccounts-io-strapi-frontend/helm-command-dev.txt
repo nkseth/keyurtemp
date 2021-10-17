@@ -8,7 +8,7 @@ subdomainBackend="strapi"
 
 echo "Deployment Dry Run"
 
-helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
+helm upgrade --install $subdomain-frontend simpleaccounts-io-strapi-frontend/$helmDir --values simpleaccounts-io-strapi-frontend/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
 --set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
@@ -27,7 +27,7 @@ helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDi
 
 echo "Deploying the application"
 
-helm upgrade --install $subdomain-frontend-dev simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
+helm upgrade --install $subdomain-frontend simpleaccounts-io-strapi-frontend/$helmDir --values simpleaccounts-io-strapi-frontend/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
 --set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
