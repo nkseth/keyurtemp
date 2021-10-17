@@ -29,7 +29,9 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-              script: 'npm i --package-lock-only'
+              script: |
+                export NODE_OPTIONS='--max_old_space_size=16384'
+                'npm i --package-lock-only'
 
           - task: Cache@2
             inputs:
