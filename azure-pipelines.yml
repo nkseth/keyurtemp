@@ -13,7 +13,7 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 stages:
   - stage: ci_build_simpleAccounts_io
@@ -28,24 +28,26 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-              script: 'yarn install'
+              script: 'npm i --package-lock-only'
 
           - task: Cache@2
             inputs:
-              key: '"yarn" | "$(Agent.OS)" | yarn.lock'
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
-                yarn | "$(Agent.OS)"
-              path: $(YARN_CACHE_FOLDER)
-            displayName: Cache Yarn packages
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: Cache npm
+          - script: npm ci
 
-          - script: yarn --frozen-lockfile
-
-          - task: CmdLine@2
+          - task: NodeTool@0
             inputs:
-              script: |
-                'yarn add @material-ui/core@next'
-                'yarn add @material-ui/styles@next'
-                'yarn build'
+              versionSpec: '10.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              npm rebuild node-sass
+              npm run build
+            displayName: 'npm install and build'
 
           - task: Cache@2
             displayName: Cache task
