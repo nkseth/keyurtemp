@@ -1,6 +1,6 @@
 nameserver="simpleaccounts-io-strapi-website"
 maindomain="simpleaccounts.io"
-subdomain="marketplace"
+subdomain="marketplace-dev"
 helmDir="simpleaccounts-io-strapi-frontend"
 SVrelease="$(Release.Artifacts._simpleaccounts-io-strapi-frontend.BuildNumber)"
 createDatabase="false"
@@ -11,7 +11,7 @@ echo "Deployment Dry Run"
 helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
---set simpleAccountsBackendHost="https://$subdomainBackend-api.$maindomain" \
+--set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \
@@ -20,17 +20,17 @@ helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDi
 --set ingress.hosts[0].paths[0]="/*" \
 --set ingress.tls[0].hosts[0]=$subdomain.$maindomain \
 --set ingress.tls[0].hosts[1]=www.$subdomain.$maindomain \
---set ingress.tls[0].secretName=simpleaccounts-io-strapi-website-tls \
+--set ingress.tls[0].secretName=simpleaccounts-io-strapi-dev-website-tls \
 --set database.enabled=$createDatabase \
 -n $nameserver \
 --dry-run --debug --wait
 
 echo "Deploying the application"
 
-helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
+helm upgrade --install $subdomain-frontend-dev simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
---set simpleAccountsBackendHost="https://$subdomainBackend-api.$maindomain" \
+--set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \
@@ -39,7 +39,7 @@ helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDi
 --set ingress.hosts[0].paths[0]="/*" \
 --set ingress.tls[0].hosts[0]=$subdomain.$maindomain \
 --set ingress.tls[0].hosts[1]=www.$subdomain.$maindomain \
---set ingress.tls[0].secretName=simpleaccounts-io-strapi-website-tls \
+--set ingress.tls[0].secretName=simpleaccounts-io-strapi-dev-website-tls \
 --set database.enabled=$createDatabase \
 -n $nameserver \
 --wait

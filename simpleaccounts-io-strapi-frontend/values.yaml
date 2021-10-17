@@ -64,7 +64,7 @@ ingress:
     - host: marketplace.simpleaccounts.io
       paths: [/*]
   tls:
-    - secretName: simpleaccounts-io-strapi-website-tls
+    - secretName: simpleaccounts-io-strapi-frontend-tls
       hosts:
         - marketplace.simpleaccounts.io
         - www.marketplace.simpleaccounts.io

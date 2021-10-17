@@ -1,38 +1,17 @@
-#!/bin/bash
-#
-# Prarameters
-# 1 - install or upgrade operation
-# 2 - subdomain name for SimpleAccounts installation
-# 3 - SimpleAccounts docker image version (Frontend)
-# End of parameters
-#
-if [ "$1" != "upgrade" ]
-then
-        echo "ERROR: Wrong operation"
-        exit 1
-elif [[ $# != 3 ]]
-then
-        echo "ERROR: Wrong number of argumeents"
-        exit 1
-fi
-
-echo "Start SimpleAccounts $1 for $2:$3"
-
 nameserver="simpleaccounts-io-strapi-website"
 maindomain="simpleaccounts.io"
-subdomain="$2"
+subdomain="marketplace-test"
 helmDir="simpleaccounts-io-strapi-frontend"
-SVrelease="$3"
+SVrelease="$(Release.Artifacts._simpleaccounts-io-strapi-frontend.BuildNumber)"
 createDatabase="false"
 subdomainBackend="strapi"
 
+echo "Deployment Dry Run"
 
-echo "Test deployment script"
-
-helm $1 --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
+helm upgrade --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
---set simpleAccountsBackendHost="https://$subdomainBackend-api.$maindomain" \
+--set simpleAccountsBackendHost="https://$subdomainBackend-api-test.$maindomain" \
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \
@@ -46,12 +25,12 @@ helm $1 --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --v
 -n $nameserver \
 --dry-run --debug --wait
 
-echo "Deploying the scripts"
+echo "Deploying the application"
 
-helm $1 --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
+helm upgrade --install $subdomain-frontend-test simpleaccounts-strapi-website/$helmDir --values simpleaccounts-strapi-website/$helmDir/values.yaml \
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
---set simpleAccountsBackendHost="https://$subdomainBackend-api.$maindomain" \
+--set simpleAccountsBackendHost="https://$subdomainBackend-api-test.$maindomain" \
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \
@@ -65,4 +44,4 @@ helm $1 --install $subdomain-frontend simpleaccounts-strapi-website/$helmDir --v
 -n $nameserver \
 --wait
 
-echo "Deployment done."
+echo "Deployment done successfully"
