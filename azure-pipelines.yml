@@ -27,9 +27,9 @@ stages:
         timeoutInMinutes: 30
 
         steps:
-          - task: CmdLine@2
-            inputs:
-              script: 'npm i --package-lock-only'
+          # - task: CmdLine@2
+          #   inputs:
+          #     script: 'npm i --package-lock-only'
 
           - task: Cache@2
             inputs:
