@@ -54,7 +54,8 @@ const AuthContext = createContext({
   method: 'jwt',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
+  prospect: () => Promise.resolve()
 });
 
 AuthProvider.propTypes = {
@@ -140,6 +141,23 @@ function AuthProvider({ children }) {
     });
   };
 
+  const prospect = async (email, firstName, lastName) => {
+    const response = await axios.post('/api/account/register', {
+      email,
+      firstName,
+      lastName
+    });
+    const { accessToken, user } = response.data;
+
+    window.localStorage.setItem('accessToken', accessToken);
+    dispatch({
+      type: 'REGISTER',
+      payload: {
+        user
+      }
+    });
+  };
+
   const logout = async () => {
     setSession(null);
     dispatch({ type: 'LOGOUT' });
@@ -157,6 +175,7 @@ function AuthProvider({ children }) {
         login,
         logout,
         register,
+        prospect,
         resetPassword,
         updateProfile
       }}
