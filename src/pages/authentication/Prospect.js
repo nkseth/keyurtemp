@@ -14,6 +14,7 @@ import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { ProspectForm } from '../../components/authentication/prospect';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
+import ProspectFormCount from "../../components/authentication/prospect/ProspectFormCount";
 
 // ----------------------------------------------------------------------
 
@@ -41,14 +42,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   padding: theme.spacing(12, 0)
 }));
-
 // ----------------------------------------------------------------------
 
 export default function Prospect() {
   const { method } = useAuth();
-
   return (
-    <RootStyle title="Prospect | Minimal-UI">
+    <RootStyle title="Prospect">
       <AuthLayout>
 		  Already have registered with SimpleAccounts? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
@@ -93,7 +92,7 @@ export default function Prospect() {
             </Link>
             .
           </Typography>
-
+          <ProspectFormCount/>
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
               Already have registered with SimpleAccounts?&nbsp;
