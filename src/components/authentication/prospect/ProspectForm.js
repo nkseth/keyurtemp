@@ -20,7 +20,7 @@ import { styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export default function ProspectForm() {
+export default function ProspectForm(props) {
   const { prospect } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -54,14 +54,12 @@ export default function ProspectForm() {
         }).then(async (response) => {
 
                })
-        enqueueSnackbar('',{
+        enqueueSnackbar('Prospect Successful',{
           variant:'success',
-          action: (key) => (
-         <ProspectFormCount/>
-          )
         });
         if (isMountedRef.current) {
           setSubmitting(false);
+          props.handleProspectShow()
         }
       } catch (error) {
         console.error(error);

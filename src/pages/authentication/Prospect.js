@@ -15,6 +15,7 @@ import { MHidden } from '../../components/@material-extend';
 import { ProspectForm } from '../../components/authentication/prospect';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 import ProspectFormCount from "../../components/authentication/prospect/ProspectFormCount";
+import {useState} from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Prospect() {
+  const [showProspect , setshowProspect]  = useState(false)
   const { method } = useAuth();
   return (
     <RootStyle title="Prospect">
@@ -79,9 +81,9 @@ export default function Prospect() {
 
           {method === 'firebase' && <AuthFirebaseSocials />}
 
-          <ProspectForm />
-
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+          {!showProspect && <> <ProspectForm
+          handleProspectShow={() => setshowProspect(true)}
+          />  <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
             By prospecting, I agree to these&nbsp;
             <Link underline="always" color="text.primary" href="#">
               Terms of Service
@@ -90,9 +92,9 @@ export default function Prospect() {
             <Link underline="always" color="text.primary" href="#">
               Privacy Policy
             </Link>
-            .
-          </Typography>
-          <ProspectFormCount/>
+
+          </Typography></>}
+          {showProspect && <ProspectFormCount/>}
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
               Already have registered with SimpleAccounts?&nbsp;
