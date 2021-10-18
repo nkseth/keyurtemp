@@ -141,22 +141,24 @@ function AuthProvider({ children }) {
     });
   };
 
-  const prospect = async (email, firstName, lastName) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      firstName,
-      lastName
-    });
-    const { accessToken, user } = response.data;
-
-    window.localStorage.setItem('accessToken', accessToken);
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user
-      }
-    });
-  };
+  // const prospect = async (email, firstName, lastName) => {
+  //   debugger
+  //
+  //   const response = await axiosInstance.post('/prospects', {
+  //     email,
+  //     firstName,
+  //     lastName
+  //   });
+  //   console.log(response,"response")
+  //
+  //   dispatch({
+  //     type: 'PROSPECT',
+  //     payload: {
+  //       isAuthenticated: true,
+  //       user
+  //     }
+  //   });
+  // };
 
   const logout = async () => {
     setSession(null);
@@ -175,7 +177,7 @@ function AuthProvider({ children }) {
         login,
         logout,
         register,
-        prospect,
+        // prospect,
         resetPassword,
         updateProfile
       }}

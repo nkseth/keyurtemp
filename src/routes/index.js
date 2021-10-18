@@ -165,7 +165,7 @@ export default function Router() {
     },
     {
       path: '/',
-      element: <MainLayout />,
+      element: <Prospect />,
       children: [
         { element: <LandingPage /> },
         { path: 'about-us', element: <About /> },

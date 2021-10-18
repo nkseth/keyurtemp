@@ -3,13 +3,21 @@ import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { Stack, TextField, Alert } from '@mui/material';
+import { Stack, TextField, Alert,Typography, Button,Card ,CardContent } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
 //
 import { MIconButton } from '../../@material-extend';
+import axiosInstance from "../../../utils/axios";
+import ProspectFormCount from "./ProspectFormCount";
+import {useState} from "react";
+import Prospect from "../../../pages/authentication/Prospect";
+import {SeoIllustration} from "../../../assets";
+import { styled } from '@mui/material/styles';
+import useEffect from "../../../hooks/useEffect";
 
 // ----------------------------------------------------------------------
 
@@ -33,13 +41,24 @@ export default function ProspectForm() {
     validationSchema: ProspectSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await prospect(values.email, values.firstName, values.lastName);
-        enqueueSnackbar('Prospect success', {
-          variant: 'success',
+        await axiosInstance({
+          method: 'POST',
+          headers: {
+            'Content-Type': "application/json"
+          },
+          url: '/prospects',
+          data: JSON.stringify({
+            firstname:  values.firstName,
+            lastname: values.lastName,
+            email: values.email
+          })
+        }).then(async (response) => {
+
+               })
+        enqueueSnackbar('',{
+          variant:'success',
           action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
+         <ProspectFormCount/>
           )
         });
         if (isMountedRef.current) {
@@ -97,5 +116,7 @@ export default function ProspectForm() {
         </Stack>
       </Form>
     </FormikProvider>
+
+
   );
 }
