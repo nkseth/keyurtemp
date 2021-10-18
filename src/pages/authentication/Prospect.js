@@ -58,10 +58,11 @@ export default function Prospect() {
       </AuthLayout>
       <MHidden width="mdDown">
         <SectionStyle>
+           {/* { <img alt="SimpleAccounts Logo" src="/static/illustrations/SimpleAccounts-Logo.jpg" /> } */}
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Manage your accounts simply and more effectively with SimpleAccounts
           </Typography>
-          <img alt="prospect" src="/static/illustrations/illustration_register.png" />
+          <img alt="prospect" src="/static/illustrations/prospect_register.png" />
         </SectionStyle>
       </MHidden>
 
@@ -74,9 +75,9 @@ export default function Prospect() {
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>Free for early birds. No credit card needed.</Typography>
             </Box>
-            <Tooltip title={capitalCase(method)}>
+            {/* <Tooltip title={capitalCase(method)}>
               <Box component="img" src={`/static/auth/ic_${method}.png`} sx={{ width: 32, height: 32 }} />
-            </Tooltip>
+            </Tooltip> */}
           </Box>
 
           {method === 'firebase' && <AuthFirebaseSocials />}
