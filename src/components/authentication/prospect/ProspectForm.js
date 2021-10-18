@@ -17,7 +17,6 @@ import {useState} from "react";
 import Prospect from "../../../pages/authentication/Prospect";
 import {SeoIllustration} from "../../../assets";
 import { styled } from '@mui/material/styles';
-import useEffect from "../../../hooks/useEffect";
 
 // ----------------------------------------------------------------------
 
