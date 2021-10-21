@@ -50,21 +50,6 @@ export default function Prospect() {
   const { method } = useAuth();
   return (
     <RootStyle title="Prospect">
-      <AuthLayout>
-        {!showProspect && (
-          <>
-            Already have registered with SimpleAccounts? &nbsp;
-            <Link
-              underline="none"
-              variant="subtitle2"
-              component={RouterLink}
-              to={PATH_AUTH.login}
-            >
-              Login
-            </Link>
-          </>
-        )}
-      </AuthLayout>
       <MHidden width="mdDown">
         <SectionStyle>
           {/* { <img alt="SimpleAccounts Logo" src="/static/illustrations/SimpleAccounts-Logo.jpg" /> } */}
