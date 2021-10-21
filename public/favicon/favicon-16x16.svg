@@ -1,26 +1,7 @@
-import PropTypes from "prop-types";
-// material
-import { useTheme } from "@mui/material/styles";
-import { Box } from "@mui/material";
-
-// ----------------------------------------------------------------------
-
-Logo.propTypes = {
-  sx: PropTypes.object,
-};
-
-export default function Logo({ sx }) {
-  const theme = useTheme();
-  const PRIMARY_LIGHT = theme.palette.primary.light;
-  const PRIMARY_MAIN = theme.palette.primary.main;
-  const PRIMARY_DARK = theme.palette.primary.dark;
-
-  return (
-    <Box sx={{ width: 200, height: 50, ...sx }}>
-      <svg
+<svg
         xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="100%"
+        width="16"
+        height="16"
         viewBox="0 0 439.466 85.441"
       >
         <g
@@ -236,6 +217,3 @@ export default function Logo({ sx }) {
           </g>
         </g>
       </svg>
-    </Box>
-  );
-}
