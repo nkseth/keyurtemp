@@ -35,7 +35,7 @@ debugger
         <RootStyle>
         <CardContent
             sx={{
-                p: { md: 0 },
+                p: { md: 5 },
                 pl: { md: 5 },
                 color: 'grey.800'
             }}
@@ -44,7 +44,7 @@ debugger
                 Welcome
             </Typography>
             <Typography
-                bgcolor={"grey"} component="h1" variant="h5">You are {count}th in the Waitlist.</Typography>
+                bgcolor={"grey"} component="h1" variant="h5">You are <span  style={{textDecoration:"underline", fontSize:"1.5rem"}}>{count}th</span> in the waitlist to explore the future of accounting.</Typography>
         </CardContent>
     <SeoIllustration
         sx={{
