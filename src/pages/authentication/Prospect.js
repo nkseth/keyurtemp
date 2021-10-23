@@ -50,6 +50,7 @@ export default function Prospect() {
   const { method } = useAuth();
   return (
     <RootStyle title="Prospect">
+      <AuthLayout></AuthLayout>
       <MHidden width="mdDown">
         <SectionStyle>
           {/* { <img alt="SimpleAccounts Logo" src="/static/illustrations/SimpleAccounts-Logo.jpg" /> } */}
