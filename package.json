@@ -119,6 +119,7 @@
     "react-scroll": "^1.8.4",
     "react-slick": "^0.28.0",
     "react-spring": "^9.2.4",
+    "recaptcha-v3": "^1.10.0",
     "redux": "^4.1.1",
     "redux-persist": "^6.0.0",
     "rehype-highlight": "^5.0.0",

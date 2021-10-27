@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // ----------------------------------------------------------------------
-const baseurl = 'https://strapi-api-test.simpleaccounts.io';
+const baseurl = process.env.REACT_APP_ENDPOINT;
 
 // const axiosInstance = axios.create();
 // axiosInstance.interceptors.response.use(
