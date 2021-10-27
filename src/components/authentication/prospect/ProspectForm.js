@@ -77,10 +77,10 @@ if(!token){
       } catch (error) {
         console.error(error);
         enqueueSnackbar(error?.response?.data?.message,{
-          variant:'success',
+          variant:'error',
         });
         if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.message});
+          setErrors({ afterSubmit:error?.response?.data?.message});
           setSubmitting(false);
         }
       }
@@ -98,18 +98,19 @@ if(!token){
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
-
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-
-          <ReCAPTCHA
+      <ReCAPTCHA
             style={{ display: "inline-block" }}
            size="invisible"
             ref={cref}
             sitekey={process.env.REACT_APP_CAPTCHA}
            
           />
+        <Stack spacing={3}>
+          {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+
+          
 
             <TextField
               fullWidth
