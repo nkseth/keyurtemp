@@ -13,6 +13,8 @@ helm upgrade --install $subdomain-frontend simpleaccounts-io-strapi-frontend/$he
 --set image.repository.frontend.imageName="datainn.azurecr.io/simpleaccounts-io-strapi-frontend" \
 --set image.repository.frontend.tag=$SVrelease \
 --set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
+--set simpleAccountsMagicKey: "pk_live_8559E85B12D31517"
+--set simpleAccountsCaptchaKey: "6LeI4_ccAAAAABJ9FHEGCUf7XfWuQu4m2Tkx_Ahk"
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \
@@ -32,6 +34,8 @@ helm upgrade --install $subdomain-frontend simpleaccounts-io-strapi-frontend/$he
 --set simpleAccountsFrontendRelease=$SVrelease \
 --set image.repository.frontend.tag=$SVrelease \
 --set simpleAccountsBackendHost="https://$subdomainBackend-api-dev.$maindomain" \
+--set simpleAccountsMagicKey: "pk_live_8559E85B12D31517"
+--set simpleAccountsCaptchaKey: "6LeI4_ccAAAAABJ9FHEGCUf7XfWuQu4m2Tkx_Ahk"
 --set fullnameOverride=$subdomain-frontend \
 --set serviceAccount.name=$subdomain-deploy-robot-frontend \
 --set ports.containerPort.frontendPort=80 \

@@ -18,6 +18,7 @@ azureACRServicePrinciple:
 simpleAccountsFrontendRelease: "latest"
 simpleAccountsBackendHost: "https://strapi-api.simpleaccounts.io"
 simpleAccountsMagicKey: "pk_live_8559E85B12D31517"
+simpleAccountsCaptchaKey: "6LeI4_ccAAAAABJ9FHEGCUf7XfWuQu4m2Tkx_Ahk"
 
 ports:
   containerPort:

@@ -65,6 +65,8 @@ spec:
               value: "{{ .Values.simpleAccountsBackendHost }}"
             - name: REACT_APP_MAGIC_PUBLIC_KEY
               value: "{{ .Values.simpleAccountsMagicKey }}"
+			- name: REACT_APP_CAPTCHA
+			  value: "{{ .Values.simpleAccountsCaptchaKey }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
