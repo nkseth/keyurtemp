@@ -19,6 +19,12 @@ export const auth0Config = {
   domain: process.env.REACT_APP_AUTH0_DOMAIN
 };
 
+export default {
+	REACT_APP_MAGIC_PUBLIC_KEY: window._env_.REACT_APP_MAGIC_PUBLIC_KEY,
+	REACT_APP_ENDPOINT: window._env_.REACT_APP_ENDPOINT,
+	REACT_APP_CAPTCHA: window._env_.REACT_APP_CAPTCHA,
+};
+
 export const mapConfig = process.env.REACT_APP_MAP_MAPBOX;
 
 export const googleAnalyticsConfig = process.env.REACT_APP_GA_MEASUREMENT_ID;
