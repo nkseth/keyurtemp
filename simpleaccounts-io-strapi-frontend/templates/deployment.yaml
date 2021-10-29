@@ -59,14 +59,14 @@ spec:
             successThreshold: 1
             failureThreshold: 10
           env:
-            - name: SIMPLEACCOUNTS-FRONTEND-RELEASE
-              value: "{{ .Values.simpleAccountsFrontendRelease }}"
-            - name: REACT_APP_ENDPOINT
-              value: "{{ .Values.simpleAccountsBackendHost }}"
-            - name: REACT_APP_MAGIC_PUBLIC_KEY
-              value: "{{ .Values.simpleAccountsMagicKey }}"
-			- name: REACT_APP_CAPTCHA
-			  value: "{{ .Values.simpleAccountsCaptchaKey }}"
+           - name: SIMPLEACCOUNTS-FRONTEND-RELEASE
+             value: "{{ .Values.simpleAccountsFrontendRelease }}"
+           - name: REACT_APP_ENDPOINT
+             value: "{{ .Values.simpleAccountsBackendHost }}"
+           - name: REACT_APP_MAGIC_PUBLIC_KEY
+             value: "{{ .Values.simpleAccountsMagicKey }}"
+           - name: REACT_APP_CAPTCHA
+             value: "{{ .Values.simpleAccountsCaptchaKey }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
