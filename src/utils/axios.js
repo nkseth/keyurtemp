@@ -1,5 +1,5 @@
 import axios from 'axios';
-import conf from './config';
+import conf from '../config';
 // ----------------------------------------------------------------------
 const baseurl = conf.REACT_APP_ENDPOINT;
 
