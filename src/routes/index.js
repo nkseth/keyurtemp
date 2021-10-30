@@ -70,7 +70,7 @@ export default function Router() {
 	    },
         { path: 'login-unprotected', element: <Login /> },
         { path: 'register-unprotected', element: <Register /> },
-	    { path: 'prospect-unprotected', element: <Prospect /> },
+	    { path: 'prospects', element: <Prospect /> },
         { path: 'reset-password', element: <ResetPassword /> },
         { path: 'verify', element: <VerifyCode /> }
       ]

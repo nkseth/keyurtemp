@@ -118,14 +118,14 @@ export default function Prospect() {
               </Typography>
             </>
           )}
-          <MHidden width="smUp">
+          {/* <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: "center" }}>
               Already have registered with SimpleAccounts?&nbsp;
               <Link to={PATH_AUTH.login} component={RouterLink}>
                 Login
               </Link>
             </Typography>
-          </MHidden>
+          </MHidden> */}
         </ContentStyle>
       </Container>
     </RootStyle>
