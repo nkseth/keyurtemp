@@ -44,7 +44,7 @@ debugger
                 Welcome
             </Typography>
             <Typography
-                bgcolor={"grey"} component="h1" variant="h5">You are <span  style={{textDecoration:"underline", fontSize:"1.5rem", textDecorationColor:"darkorange"}}>{count}</span> in the waitlist to explore the future of accounting.</Typography>
+                bgcolor={"grey"} component="h1" variant="h5">You are <span  style={{textDecoration:"underline", fontSize:"1.5rem", textDecorationColor:"darkorange", textEmphasisColor:"darkorange"}}>{count}</span> in the waitlist to explore the future of accounting.</Typography>
         </CardContent>
     <SeoIllustration
         sx={{
