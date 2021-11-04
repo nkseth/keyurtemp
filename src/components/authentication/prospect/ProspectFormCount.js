@@ -7,6 +7,7 @@ import { Typography, Button,Card ,CardContent } from '@mui/material';
 import {Link as RouterLink} from "react-router-dom";
 import {SeoIllustration} from "../../../assets";
 import { styled } from '@mui/material/styles';
+import SvgIconStyle from "../../SvgIconStyle";
 
 
 export default function ProspectFormCount() {
@@ -48,7 +49,7 @@ debugger
 			<Typography
 				bgcolor={"grey"} component="h1" variant="h5"><a style="color:#2064D8"
 																href="https://www.simpleaccounts.io/schedule-your-demo/">
-				<multiline>&nbsp Book a demo with us.</multiline>
+				<multiline><SvgIconStyle src={`/static/icons/navbar/ic_calendar.svg`} sx={{ width: '100%', height: '100%' }} />&nbsp Book a demo with us.</multiline>
 			</a></Typography>
         </CardContent>
     <SeoIllustration
