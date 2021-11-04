@@ -48,7 +48,7 @@ debugger
 			<Typography
 				bgcolor={"grey"} component="h1" variant="h5"><a style="color:#2064D8"
 																href="https://www.simpleaccounts.io/schedule-your-demo/">
-				<multiline><i style="font-size:24px" className="fa">&#xf073;</i>&nbsp Book a demo with us.</multiline>
+				<multiline>&nbsp Book a demo with us.</multiline>
 			</a></Typography>
         </CardContent>
     <SeoIllustration
