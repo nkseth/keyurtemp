@@ -48,8 +48,10 @@ debugger
 				bgcolor={"grey"} component="h1" variant="h5">You are <span  style={{textDecoration:"underline", fontSize:"1.5rem", textDecorationColor:"darkorange", textEmphasisColor:"darkorange", color:"darkorange"}}>{count}th</span> in the waitlist to explore the future of accounting.</Typography>
 			<Typography
 				bgcolor={"grey"} component="h1" variant="h5">
-				<a style="color:#2064D8" href="https://www.simpleaccounts.io/schedule-your-demo/">
-				Book a demo with us.</a></Typography>
+				<Link underline="always" color="text.primary" href="https://www.simpleaccounts.io/schedule-your-demo/">
+				Book a demo with us.
+				</Link>
+			</Typography>
         </CardContent>
     <SeoIllustration
         sx={{
