@@ -49,7 +49,7 @@ debugger
 			<Typography
 				bgcolor={"grey"} component="h1" variant="h5">
 				<Link underline="always" color="text.primary" href="https://www.simpleaccounts.io/schedule-your-demo/">
-				Book a demo with us.
+					<SvgIconStyle src={`/static/icons/navbar/ic_calendar.svg`} sx={{ width: '100%', height: '100%' }} /> Book a demo with us.
 				</Link>
 			</Typography>
         </CardContent>
