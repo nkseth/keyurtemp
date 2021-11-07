@@ -25,50 +25,7 @@ import { title } from "src/utils/mock-data/text";
 import LogoOnlyLayout from "src/layouts/LogoOnlyLayout";
 // ----------------------------------------------------------------------
 
-const PLANS = [
-  {
-    subscription: "basic",
-    icon: <PlanFreeIcon />,
-    price: 0,
-    caption: "forever",
-    lists: [
-      { text: "3 prototypes", isAvailable: true },
-      { text: "3 boards", isAvailable: true },
-      { text: "Up to 5 team members", isAvailable: false },
-      { text: "Advanced security", isAvailable: false },
-      { text: "Permissions & workflows", isAvailable: false },
-    ],
-    labelAction: "current plan",
-  },
-  {
-    subscription: "starter",
-    icon: <PlanStarterIcon />,
-    price: 4.99,
-    caption: "saving $24 a year",
-    lists: [
-      { text: "3 prototypes", isAvailable: true },
-      { text: "3 boards", isAvailable: true },
-      { text: "Up to 5 team members", isAvailable: true },
-      { text: "Advanced security", isAvailable: false },
-      { text: "Permissions & workflows", isAvailable: false },
-    ],
-    labelAction: "choose starter",
-  },
-  {
-    subscription: "premium",
-    icon: <PlanPremiumIcon />,
-    price: 9.99,
-    caption: "saving $124 a year",
-    lists: [
-      { text: "3 prototypes", isAvailable: true },
-      { text: "3 boards", isAvailable: true },
-      { text: "Up to 5 team members", isAvailable: true },
-      { text: "Advanced security", isAvailable: true },
-      { text: "Permissions & workflows", isAvailable: true },
-    ],
-    labelAction: "choose premium",
-  },
-];
+
 
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: "100%",
@@ -84,69 +41,118 @@ export default function MarketPlace() {
   const addons = useSelector((state) => state.pricing.addons);
   const [searchField, setSearchField] = useState("");
 
-  const [checkBoxValues, setCheckBoxValues] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      free: false,
-      ecommerce: false,
-      business: false,
+  const [Plans,setplans]=useState([]);
+const [filter,setfilter]=useState([])
+const [filterop,setfilterop]=useState([])
+const [titleop,settitles]=useState([])
+const [finalplan,setfinalplan]=useState([])
+const [searchq,setsearchq]=useState("")
+
+const filtercreator=()=>{
+   
+    const filteroptions=[]
+    const titles=[]
+    let fplani=[...Plans]
+    let fp=[]
+    console.log("thishsbshshshs",filter.length===0)
+    if(filter.length===0){
+console.log("this run",fplani)
+      fp=[...fplani]
+      setfinalplan(fplani)
     }
-  );
-
-  const priceFilter = (type) => {
-    const allPrices = [...plans, ...addons];
-
-    const filterData = [];
-
-    if (checkBoxValues.free) {
-      filterData.push(...allPrices.filter((el) => el.filteroption === "free"));
+    else{
+        fplani.map((item)=>{
+            if(filter.includes(item.filteroption))
+            {
+                fp.push(item)
+            }
+        })
+    
+        setfinalplan(fp)
     }
+    
+Plans.map((item)=>{
+    if(!filteroptions.includes(item.filteroption))
+    filteroptions.push(item.filteroption)
+    return filteroptions
+})
+fp.map((item)=>{
+  
+    if(!titles.includes(item.category))
+    
+    titles.push(item.category)
+  
+})
+setfilterop(filteroptions)
+settitles(titles)
 
-    if (checkBoxValues.ecommerce) {
-      filterData.push(
-        ...allPrices.filter((el) => el.filteroption === "e-commerce")
-      );
-    }
+return fp
+}
 
-    if (checkBoxValues.business) {
-      filterData.push(
-        ...allPrices.filter((el) => el.filteroption === "business")
-      );
-    }
+useEffect(()=>{
+  filtercreator()
+},[Plans,filter])
 
-    if (filterData.length > 0) {
-      return filterData.filter((el) => {
-        return el.type === type && el.title.toLowerCase().includes(searchField);
-      });
-    }
+useEffect(()=>{
+  setplans([...plans,...addons])
+  
+},[plans,addons]) 
 
-    return allPrices.filter((el) => {
-      return el.type === type && el.title.toLowerCase().includes(searchField);
+
+
+useEffect(()=>{
+    searchfilter()
+
+},[searchq])
+
+
+useEffect(()=>{
+  dispatch(getPlans())
+  dispatch(getAddons())
+
+},[])
+
+const searchfilter=()=>{
+  const returnfinal=filtercreator()
+   const pl=[...returnfinal]
+   if(searchq!==""){ 
+    const searchResults = pl.filter(item => {
+
+        return item.title.toLowerCase().includes(searchq.toLowerCase());
     });
-  };
+    const titles=[]
 
-  const groupedAddons = Object.entries(
-    lodash.groupBy(priceFilter("addon"), function (value) {
-      return value.category;
+    searchResults.map((item)=>{
+     
+        if(!titles.includes(item.category))
+        
+        titles.push(item.category)
+      
     })
-  );
+    settitles(titles)
+    setfinalplan(searchResults)
+}
 
-  useEffect(() => {
-    dispatch(getPlans());
-    dispatch(getAddons());
-  }, [dispatch]);
+   
+}
 
-  const handleInputChange = (evt) => {
-    setSearchField(evt.target.value.toLowerCase());
-  };
-
-  const handleCheckBoxChange = (evt) => {
-    setCheckBoxValues({ [evt.target.name]: evt.target.checked });
-  };
+const filterclicked=(e,type)=>{
+    const olds=[...filter]
+    setsearchq("")
+  if(e.target.checked){
+    olds.push(type)
+    setfilter(olds)
+  }
+  else {
+      olds.splice(olds.indexOf(type),1)
+      setfilter(olds)
+      
+  }
+}
   return (
     <>
       <LogoOnlyLayout />
-      <RootStyle title="Pricing | Minimal-UI">
+      <RootStyle title="Market Place | SimpleAccounts">
         <Container maxWidth="lg">
           <Typography variant="h3" align="center" paragraph>
             Flexible plans for your
@@ -161,8 +167,8 @@ export default function MarketPlace() {
               placeholder="Search Plans/Addons"
               size="small"
               fullWidth
-              onChange={handleInputChange}
-              value={searchField}
+              onChange={(e)=>{setsearchq(e.target.value)}}
+              value={searchq}
               name="search"
               // sx={{
               //   width: 300,
@@ -170,40 +176,61 @@ export default function MarketPlace() {
             />
             <Stack direction="row" alignItems="center" justifyContent="center">
               <FormGroup row>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="free"
-                      checked={checkBoxValues.free}
-                      onChange={handleCheckBoxChange}
+                {console.log("filter options",filterop)}
+               {filterop.map((item)=>{
+                      return <FormControlLabel style={{textTransform: 'capitalize' }}
+                      control={
+                        <Checkbox
+                          name="free"
+                          onChange={(e)=>{filterclicked(e,item)}}
+                        />
+                      }
+                      label={item}
                     />
-                  }
-                  label="Free"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="ecommerce"
-                      checked={checkBoxValues.ecommerce}
-                      onChange={handleCheckBoxChange}
-                    />
-                  }
-                  label="E-commerce"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="business"
-                      checked={checkBoxValues.business}
-                      onChange={handleCheckBoxChange}
-                    />
-                  }
-                  label="Business"
-                />
+               })}
+              
+               
               </FormGroup>
             </Stack>
           </Box>
-          {plans.length > 0 && (
+
+          {
+            
+            titleop.map((itemt)=>{
+                return(
+                  
+                  <Box sx={{ mt: 5 }}>
+                     {console.log("final plan",finalplan)}
+                  <Typography
+                    variant="h5"
+                    align="left"
+                    sx={{ color: "text.primary", mb: 3 }}
+                    style={{textTransform: 'capitalize' }}
+                  >
+                    {itemt}
+                  </Typography>
+                 
+                  <Grid container spacing={3}>
+                   
+                    {finalplan.map((card, index) => {
+                      if(itemt===card.category){
+                        return <Grid
+                        item
+                        xs={12}
+                        md={4}
+                        key={card.id + Math.random() * 1000}
+                      >
+                        <PricingPlanCard card={card} index={index} btn={true} />
+                      </Grid>
+                      }
+                  else return null
+                })}
+                  </Grid>
+                </Box>
+                )
+            })
+          }
+          {/* {plans.length > 0 && (
             <Box sx={{ mt: 5 }}>
               <Typography
                 variant="h5"
@@ -267,9 +294,9 @@ export default function MarketPlace() {
                     ))}
                   </Grid>
                 </Box>
-              ))}
-            </Box>
-          )}
+              ))} */}
+            {/* </Box>
+          )} */}
         </Container>
       </RootStyle>
     </>

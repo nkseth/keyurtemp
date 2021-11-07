@@ -5,7 +5,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Stack, TextField, Alert,Typography, Button,Card ,CardContent } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
+import ReCAPTCHA from "react-google-recaptcha"
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
@@ -13,7 +13,7 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import { MIconButton } from '../../@material-extend';
 import axiosInstance from "../../../utils/axios";
 import ProspectFormCount from "./ProspectFormCount";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import Prospect from "../../../pages/authentication/Prospect";
 import {SeoIllustration} from "../../../assets";
 import { styled } from '@mui/material/styles';
@@ -24,22 +24,34 @@ export default function ProspectForm(props) {
   const { prospect } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const ProspectSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required')
+    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'), 
+    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    
   });
+
+  
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
+     
     },
     validationSchema: ProspectSchema,
+    
     onSubmit: async (values, { setErrors, setSubmitting }) => {
-      try {
+      const token= await cref.current.executeAsync()
+      console.log("thiassd",token)
+      cref.current.reset()
+if(!token){
+  enqueueSnackbar(' reCAPTCHA not verified please reload the page',{
+    variant:'error',
+  });
+
+}else{ try {
         await axiosInstance({
           method: 'POST',
           headers: {
@@ -49,7 +61,8 @@ export default function ProspectForm(props) {
           data: JSON.stringify({
             firstname:  values.firstName,
             lastname: values.lastName,
-            email: values.email
+            email: values.email,
+            token
           })
         }).then(async (response) => {
 
@@ -63,23 +76,42 @@ export default function ProspectForm(props) {
         }
       } catch (error) {
         console.error(error);
+        enqueueSnackbar(error?.response?.data?.message,{
+          variant:'error',
+        });
         if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.message });
+          setErrors({ afterSubmit:error?.response?.data?.message});
           setSubmitting(false);
         }
       }
     }
+  }
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  
+  
+ 
+
+ const cref=useRef()
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <ReCAPTCHA
+            style={{ display: "inline-block" }}
+           size="invisible"
+            ref={cref}
+            sitekey="6LeA9fkcAAAAABdk34IuUy8iPuelpra-Xg-jXuJh"
+           
+          />
         <Stack spacing={3}>
           {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+
+          
+
             <TextField
               fullWidth
               label="First name"

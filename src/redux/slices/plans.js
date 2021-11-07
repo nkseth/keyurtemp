@@ -61,7 +61,7 @@ export function getPlans() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get("/plans");
+    const response = await axios.get("/plans");
       dispatch(slice.actions.getPlansSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

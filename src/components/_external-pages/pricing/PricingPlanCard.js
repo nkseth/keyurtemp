@@ -41,7 +41,7 @@ PricingPlanCard.propTypes = {
   card: PropTypes.object,
 };
 
-export default function PricingPlanCard({ card, index }) {
+export default function PricingPlanCard({ card, index ,btn}) {
   const {
     title,
     tenure,
@@ -55,7 +55,8 @@ export default function PricingPlanCard({ card, index }) {
   const dispatch = useDispatch();
 
   return (
-    <RootStyle>
+    <RootStyle >
+
       {index === 1 && (
         <Label
           color="primary"
@@ -150,7 +151,7 @@ export default function PricingPlanCard({ card, index }) {
       >
         Choose {card.title}
       </Button> */}
-      <MarketPlaceDialog btn={card.buttontype} data={card} />
+      <MarketPlaceDialog btn={card.buttontype} data={card} btnstate={btn}  />
     </RootStyle>
   );
 }

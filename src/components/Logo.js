@@ -16,7 +16,7 @@ export default function Logo({ sx }) {
   const PRIMARY_DARK = theme.palette.primary.dark;
 
   return (
-    <Box sx={{ width: 200, height: 50, ...sx }}>
+    <Box sx={{ width: 200, height: 50, ...sx }} >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100%"

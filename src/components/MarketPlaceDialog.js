@@ -11,13 +11,13 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
-// import { CartContext } from "../Context/cartapi";
-// import { withRouter } from "react-router";
-// import { AuthContext } from "../Auth";
-// import { UIContext } from "../Context/UIcontextapi";
+ import { CartContext } from "../ourlogic/Context/cartapi";
+import { AuthContext } from "../ourlogic/Context/Auth";
+import { useNavigate } from "react-router";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
 
+import Pricingcard from './_external-pages/pricing/PricingPlanCard'
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuDialogContent-root": {
     padding: theme.spacing(2),
@@ -58,66 +58,60 @@ BootstrapDialogTitle.propTypes = {
 
 const MarketPlaceDialog = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [productalreadypresent, setproductalreadypresent] =
-    React.useState(false);
-  //   const { state, dispatch, cartid, updatecart, createcart } =
-  //     React.useContext(CartContext);
-
-  //   const { UIdispatch } = React.useConstext(UIContext);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onadditem = (item) => {
-    // const newstatek = [...state];
-    // let flag = 0;
-    // newstatek.map((itemk) => {
-    //   if (item.id === itemk.id) flag = 1;
-    //   return flag;
-    // });
-    // if (flag === 0) {
-    //   const newstate = [...state, item];
-    //   dispatch({ type: "ADDITEM", payload: item });
-    //   if (cartid) {
-    //     updatecart(newstate);
-    //   } else {
-    //     createcart(newstate);
-    //   }
-    //   handleClose();
-    // } else {
-    //   UIdispatch({
-    //     type: "SNACKBAR",
-    //     payload: {
-    //       type: "error",
-    //       message: "you already have this item in the cart",
-    //       state: true,
-    //     },
-    //   });
-    // }
-  };
-
-  //   React.useEffect(() => {
-  //     const allitemid = [];
-  //     state.map((item) => {
-  //       return allitemid.push(item.id);
-  //     });
-
-  //     if (allitemid.includes(props.data.id)) {
-  //       setproductalreadypresent(true);
-  //     } else setproductalreadypresent(false);
-  //   }, [state]);
+  const [productalreadypresent,setproductalreadypresent]=React.useState(false)
+  const {state,dispatch,cartid,updatecart,createcart}=React.useContext(CartContext)
+  const history=useNavigate()
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+        
+      setOpen(false);
+    };
+    
+    const onadditem=(item)=>{
+      const newstatek=[...state]
+      let flag=0
+      newstatek.map((itemk)=>{
+          if(item.id===itemk.id) 
+          flag=1
+     return flag
+        })
+      if(flag===0){
+        const newstate=[...state,item]
+        dispatch({type:"ADDITEM",payload:item})
+        if(cartid){
+            updatecart(newstate)
+        }else{
+            createcart(newstate)
+        }
+      handleClose()
+      } else{
+      
+      }
+     
+    }
+  
+  
+    React.useEffect(()=>{
+      const allitemid=[]
+      state.map((item)=>{
+      return  allitemid.push(item.id)
+      })
+     
+      if(allitemid.includes(props.data.id)){
+        setproductalreadypresent(true)
+      }else setproductalreadypresent(false)
+    },[state])
   return (
     <div>
-      <Button
+     {props.btnstate?<Button
         variant="outlined"
         style={{ marginTop: "20px", borderRadius: "20px" }}
         onClick={handleClickOpen}
       >
         {props.btn}
-      </Button>
+      </Button>:null}
       {/* <Button
         // to={PATH_DASHBOARD.root}
         fullWidth
@@ -140,27 +134,8 @@ const MarketPlaceDialog = (props) => {
         >
           {props.data.title}
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Box
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={`${process.env.REACT_APP_ENDPOINT}${props.data?.cover?.formats?.thumbnail?.url}`}
-              alt={props.data.title}
-              style={{ maxWidth: "50%" }}
-            />
-            <Typography
-              style={{ fontSize: "2rem", fontWeight: "bolder" }}
-            >{`${props.data.currency} ${props.data.price}/User/Month`}</Typography>
-            <Box>
-              <Typography gutterBottom>{props.data.information}</Typography>
-            </Box>
-          </Box>
+        <DialogContent dividers style={{overflow: 'hidden'}}>
+         <Pricingcard card={props.data} btn={false}/>
         </DialogContent>
         <DialogActions>
           <Button
@@ -183,7 +158,7 @@ const MarketPlaceDialog = (props) => {
             onClick={() => {
               onadditem(props.data);
 
-              props.history.push("/Checkout");
+              history("/checkout");
             }}
             style={{
               background: "#28d9ad",

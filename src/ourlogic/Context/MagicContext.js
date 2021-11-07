@@ -1,7 +1,7 @@
 import { createContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
 import { Magic } from "magic-sdk";
-import { magicConfig } from "../config";
+import { magicConfig } from "../../config";
 import { OAuthExtension } from "@magic-ext/oauth";
 
 const initialState = {
@@ -113,6 +113,21 @@ function AuthProvider({ children }) {
     dispatch({ type: "LOGOUT" });
   };
 
+  const gettoken=async()=>{
+    let resi=""
+    
+    if(state.user){
+        await magic.user.getIdToken().then((res)=>{
+           resi=res
+        }).catch((error)=>{
+            
+            
+        })  
+      
+    }
+    return resi
+}
+
   return (
     <AuthContext.Provider
       value={{
@@ -120,6 +135,7 @@ function AuthProvider({ children }) {
         method: "magic",
         login,
         logout,
+        gettoken,
       }}
     >
       {children}

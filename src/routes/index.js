@@ -53,7 +53,7 @@ export default function Router() {
           ),
         },
         {
-          path: "register",
+          path: "-",
           element: (
             <GuestGuard>
               <Register />
@@ -68,6 +68,7 @@ export default function Router() {
             </GuestGuard>
           ),
         },
+       
         { path: "login-unprotected", element: <Login /> },
         { path: "register-unprotected", element: <Register /> },
         { path: "prospect-unprotected", element: <Prospect /> },
@@ -81,6 +82,22 @@ export default function Router() {
       element: (
         <AuthGuard>
           <MarketPlace />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "checkout",
+      element: (
+        <AuthGuard>
+          <Payment />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "createcompany",
+      element: (
+        <AuthGuard>
+          <Createcompany />
         </AuthGuard>
       ),
     },
@@ -251,6 +268,11 @@ const Register = Loadable(
 const Prospect = Loadable(
   lazy(() => import("../pages/authentication/Prospect"))
 );
+
+const Createcompany = Loadable(
+  lazy(() => import("../pages/createcompany/cc"))
+);
+
 const ResetPassword = Loadable(
   lazy(() => import("../pages/authentication/ResetPassword"))
 );
@@ -259,6 +281,7 @@ const VerifyCode = Loadable(
 );
 // Dashboard
 const MarketPlace = Loadable(lazy(() => import("../pages/MarketPlace")));
+
 const GeneralApp = Loadable(
   lazy(() => import("../pages/dashboard/GeneralApp"))
 );
