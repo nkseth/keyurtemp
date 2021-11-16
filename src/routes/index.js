@@ -102,6 +102,23 @@ export default function Router() {
       ),
     },
 
+    {
+      path: "profile",
+      element: (
+        <AuthGuard>
+          <Profile />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "orders",
+      element: (
+        <AuthGuard>
+          <Orders />
+        </AuthGuard>
+      ),
+    },
+
     // Dashboard Routes
     {
       path: "dashboard",
@@ -135,7 +152,7 @@ export default function Router() {
           path: "user",
           children: [
             { element: <Navigate to="/dashboard/user/profile" replace /> },
-            { path: "profile", element: <UserProfile /> },
+       
             { path: "cards", element: <UserCards /> },
             { path: "list", element: <UserList /> },
             { path: "new", element: <UserCreate /> },
@@ -315,6 +332,9 @@ const EcommerceCheckout = Loadable(
 const EcommerceInvoice = Loadable(
   lazy(() => import("../pages/dashboard/EcommerceInvoice"))
 );
+const Profile = Loadable(
+  lazy(() => import("../pages/profileppage/profilemain"))
+);
 const BlogPosts = Loadable(lazy(() => import("../pages/dashboard/BlogPosts")));
 const BlogPost = Loadable(lazy(() => import("../pages/dashboard/BlogPost")));
 const BlogNewPost = Loadable(
@@ -332,6 +352,9 @@ const UserCreate = Loadable(
   lazy(() => import("../pages/dashboard/UserCreate"))
 );
 const Chat = Loadable(lazy(() => import("../pages/dashboard/Chat")));
+
+const Orders  = Loadable(lazy(() => import("../pages/order/order")));
+
 const Mail = Loadable(lazy(() => import("../pages/dashboard/Mail")));
 const Calendar = Loadable(lazy(() => import("../pages/dashboard/Calendar")));
 const Kanban = Loadable(lazy(() => import("../pages/dashboard/Kanban")));

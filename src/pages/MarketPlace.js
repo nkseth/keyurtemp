@@ -21,16 +21,18 @@ import { PricingPlanCard } from "../components/_external-pages/pricing";
 import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from "../assets";
 import { useEffect, useReducer, useState } from "react";
 import { getAddons, getPlans } from "../redux/slices/plans";
-import { title } from "src/utils/mock-data/text";
 import LogoOnlyLayout from "src/layouts/LogoOnlyLayout";
+import useUI from '../hooks/useUI'
+import LoadingScreen from "src/components/LoadingScreen2";
+import Loading from "src/components/Apiloading";
 // ----------------------------------------------------------------------
 
 
 
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: "100%",
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10),
+  paddingTop: theme.spacing(6),
+  paddingBottom: theme.spacing(8),
 }));
 
 // ----------------------------------------------------------------------
@@ -47,7 +49,7 @@ const [filterop,setfilterop]=useState([])
 const [titleop,settitles]=useState([])
 const [finalplan,setfinalplan]=useState([])
 const [searchq,setsearchq]=useState("")
-
+const {UIdispatch}=useUI()
 const filtercreator=()=>{
    
     const filteroptions=[]
@@ -107,9 +109,10 @@ useEffect(()=>{
 
 
 useEffect(()=>{
+  UIdispatch({type:'LOADING',payload:true})
   dispatch(getPlans())
   dispatch(getAddons())
-
+  UIdispatch({type:'LOADING',payload:false})
 },[])
 
 const searchfilter=()=>{
@@ -151,8 +154,10 @@ const filterclicked=(e,type)=>{
 }
   return (
     <>
-      <LogoOnlyLayout />
+    <Loading/>
+    <LogoOnlyLayout />
       <RootStyle title="Market Place | SimpleAccounts">
+     
         <Container maxWidth="lg">
           <Typography variant="h3" align="center" paragraph>
             Flexible plans for your

@@ -5,23 +5,23 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Grid, Container, Typography, useMediaQuery } from '@mui/material';
 // utils
-import fakeRequest from '../utils/fakeRequest';
+import fakeRequest from '../../utils/fakeRequest';
 // components
-import Page from '../components/Page';
-import { PaymentSummary, PaymentMethods } from '../components/_external-pages/payment';
+import Page from '../../components/Page';
+import  PaymentSummary from './PaymentSummary'
+import PaymentMethods from './PaymentMethods'
 import LogoOnlyLayout from 'src/layouts/LogoOnlyLayout';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
-  minHeight: '100%',
-  paddingTop: theme.spacing(3),
-  paddingBottom: theme.spacing(6)
+  maxHeight: '90%',
+ 
 }));
 
 // ----------------------------------------------------------------------
 
-export default function Payment() {
+export default function Payment(props) {
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const upMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -105,19 +105,8 @@ export default function Payment() {
 
   return (
     <>
-    <LogoOnlyLayout/>
     <RootStyle title="Payment | Minimal-UI">
-      <Container maxWidth="lg">
-     
-        <Box sx={{ mb: 5 }}>
-          <Typography variant="h3" align="center" paragraph>
-            Let's finish powering you up!
-          </Typography>
-          <Typography align="center" sx={{ color: 'text.secondary' }}>
-            Professional plan is right for you.
-          </Typography>
-        </Box>
-
+      <Container >
         <Card>
           <FormikProvider value={formik}>
           
@@ -126,10 +115,11 @@ export default function Payment() {
                   <PaymentBillingAddress formik={formik} />
                 </Grid> */}
                 <Grid item xs={12} md={8}>
-                  <PaymentMethods formik={formik} />
+                  {console.log(props.data)}
+                  <PaymentMethods formik={formik} data={props.data} date={props.date} id={props.id}/>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <PaymentSummary formik={formik} />
+                  <PaymentSummary formik={formik} closed={props.closed} total={props.total} />
                 </Grid>
               </Grid>
           

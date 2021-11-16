@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
-
 const initialState = {
   isLoading: false,
   error: false,
@@ -58,6 +57,7 @@ export default slice.reducer;
 //   } = slice.actions;
 
 export function getPlans() {
+  
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {

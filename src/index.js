@@ -58,7 +58,7 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import CompanyProvider from './ourlogic/Context/companycontext'
 import CartProvider from './ourlogic/Context/cartapi'
-
+import UIContextProvider from './ourlogic/Context/UIcontextapi'
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
@@ -69,6 +69,7 @@ ReactDOM.render(
           <SettingsProvider>
             <CollapseDrawerProvider>
               <BrowserRouter>
+              <UIContextProvider>
                 <AuthProvider>
                   <CompanyProvider>
                     <CartProvider>
@@ -76,6 +77,7 @@ ReactDOM.render(
                   </CartProvider>
                   </CompanyProvider>
                 </AuthProvider>
+                </UIContextProvider>
               </BrowserRouter>
             </CollapseDrawerProvider>
           </SettingsProvider>
