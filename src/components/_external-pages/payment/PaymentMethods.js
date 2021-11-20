@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import checkmarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
+import {CartContext} from '../../../ourlogic/Context/cartapi'
+import {Grid, IconButton} from "@mui/material"
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import  useAuth from 'src/hooks/useAuth';
 // material
 import { styled } from '@mui/material/styles';
 import {
@@ -19,6 +23,7 @@ import {
 //
 import { MHidden } from '../../@material-extend';
 import PaymentNewCardForm from './PaymentNewCardForm';
+import { DeleteTwoTone } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
 
@@ -29,25 +34,13 @@ const PAYMENT_OPTIONS = [
     icons: ['/static/icons/ic_paypal.svg']
   },
   {
-    value: 'credit_card',
-    title: 'Credit / Debit Card',
-    icons: ['/static/icons/ic_mastercard.svg', '/static/icons/ic_visa.svg']
-  }
-];
-const CARD_OPTIONS = [
-  {
-    value: 'visa1',
-    label: '**** **** **** 1212 - Jimmy Holland'
+    value: 'paypal',
+    title: 'Pay with Paypal',
+    icons: ['/static/icons/ic_paypal.svg']
   },
-  {
-    value: 'visa2',
-    label: '**** **** **** 2424 - Shawn Stokes'
-  },
-  {
-    value: 'mastercard',
-    label: '**** **** **** 4545 - Cole Armstrong'
-  }
+ 
 ];
+
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(3),
@@ -76,7 +69,9 @@ PaymentMethods.propTypes = {
 export default function PaymentMethods({ formik }) {
   const [show, setShow] = useState(false);
   const { values, getFieldProps } = formik;
-
+const {user}=useAuth()
+  const {state,dispatch,cartid,updatecart,createcart}=useContext(CartContext)
+  const currentstate=[...state]
   const handleCollapseIn = () => {
     setShow((prev) => !prev);
   };
@@ -85,73 +80,85 @@ export default function PaymentMethods({ formik }) {
     setShow(false);
   };
 
+ let neewstate
+  const removeitem=(item)=>{
+    neewstate= currentstate.filter((items)=>items.id!==item)
+     dispatch({type:'REMOVEITEM',payload:neewstate})
+     console.log(user)
+     if(user){
+      if(cartid){
+        console.log('tghididid')
+     updatecart(neewstate)
+     }else{
+     createcart(neewstate)
+      }
+}
+
+ }
+
   return (
     <RootStyle>
-      <Typography variant="subtitle1" sx={{ mb: 5 }}>
-        Payment Method
+      <Typography variant="subtitle1" sx={{ mb: 5 }} style={{marginLeft:'20px'}}>
+        Your Plans/Addons in your Cart
       </Typography>
 
       <RadioGroup {...getFieldProps('method')}>
-        <Stack spacing={3}>
-          {PAYMENT_OPTIONS.map((method) => {
-            const { value, title, icons } = method;
-            const hasChildren = value === 'credit_card';
-
-            return (
+        {console.log(state)}
+        <Stack spacing={4}>
+          {state.map((method,index) => {
+             return (
               <OptionStyle
-                key={title}
-                sx={{
-                  ...(values.method === value && {
-                    boxShadow: (theme) => theme.customShadows.z8
-                  }),
-                  ...(hasChildren && { flexWrap: 'wrap' })
-                }}
-              >
-                <FormControlLabel
-                  value={value}
-                  control={<Radio checkedIcon={<Icon icon={checkmarkCircle2Fill} />} />}
-                  label={
-                    <Typography variant="subtitle2" sx={{ ml: 1 }}>
-                      {title}
+                key={index}>
+                  <Grid container style={{padding:'20px'}}>
+                  <Grid item sm={12} md={1} container justifyContent="center" alignItems="center" >
+                  <CheckCircleIcon color="secondary"/>
+                  </Grid>
+
+                  <Grid item xs={12} md={2} justifyContent="center" alignItems="flex-start" direction="column">
+                <Typography variant="h6" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize'}}>
+                      {method.title}
                     </Typography>
-                  }
-                  sx={{ py: 3, mx: 0 }}
-                />
+                    <Typography variant="subtitle2" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize'}}>
+                      {method.filteroption}
+                    </Typography>
+                    </Grid>
 
-                <MHidden width="smDown">
+                    <Grid item  container xs={12} md={4} justifyContent="center"  alignItems="flex-start" direction="column">
+                    <Typography variant="body2" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize'}}>
+                      Category
+                    </Typography>
+                <Typography variant="h6" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize'}}>
+                      {method.category}
+                    </Typography>
+                  
+                    </Grid>
+
+                    
+                    <Grid item container sm={12} md={4} justifyContent="center" alignItems="flex-start" direction="column" >
+                    <Typography variant="body2" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize'}}>
+                      price
+                    </Typography>
+                <Typography variant="body1" sx={{ ml: 1 }} color="primary" style={{textTransform:'capitalize',fontWeight:'bold'}}>
+                      {method.price} {method.currency}/{method.tenure}
+                    </Typography>
+                 
+                    </Grid>
+                    <Grid item sm={12} md={1} container justifyContent="center" alignItems="center" >
+                      <IconButton onClick={()=>removeitem(method.id)}>
+                   <DeleteTwoTone color='secondary'/>
+                   </IconButton>
+                  </Grid>
+
+                </Grid>
+
+                {/* <MHidden width="smDown">
                   <Stack direction="row" alignItems="center" spacing={1}>
-                    {icons.map((icon) => (
-                      <img key={icon} alt="logo card" src={icon} />
-                    ))}
+                <img alt="logo card" src={method.cover.formats.thumbnail.url} />
+                   
                   </Stack>
-                </MHidden>
+                </MHidden> */}
 
-                {hasChildren && (
-                  <Collapse in={values.method === 'credit_card'} sx={{ width: 1 }}>
-                    <TextField select fullWidth label="Card" {...getFieldProps('card')} SelectProps={{ native: true }}>
-                      {CARD_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </TextField>
-
-                    <Button
-                      id="addNewCard"
-                      type="button"
-                      size="small"
-                      startIcon={<Icon icon={plusFill} width={20} height={20} />}
-                      onClick={handleCollapseIn}
-                      sx={{ my: 3 }}
-                    >
-                      Add new card
-                    </Button>
-
-                    <Collapse in={show}>
-                      <PaymentNewCardForm formik={formik} onCancel={handleCollapseOut} />
-                    </Collapse>
-                  </Collapse>
-                )}
+               
               </OptionStyle>
             );
           })}

@@ -8,14 +8,15 @@ import { Box, Card, Grid, Container, Typography, useMediaQuery } from '@mui/mate
 import fakeRequest from '../utils/fakeRequest';
 // components
 import Page from '../components/Page';
-import { PaymentSummary, PaymentMethods, PaymentBillingAddress } from '../components/_external-pages/payment';
+import { PaymentSummary, PaymentMethods } from '../components/_external-pages/payment';
+import LogoOnlyLayout from 'src/layouts/LogoOnlyLayout';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: '100%',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
+  paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(6)
 }));
 
 // ----------------------------------------------------------------------
@@ -103,8 +104,11 @@ export default function Payment() {
   });
 
   return (
+    <>
+    <LogoOnlyLayout/>
     <RootStyle title="Payment | Minimal-UI">
       <Container maxWidth="lg">
+     
         <Box sx={{ mb: 5 }}>
           <Typography variant="h3" align="center" paragraph>
             Let's finish powering you up!
@@ -116,22 +120,23 @@ export default function Payment() {
 
         <Card>
           <FormikProvider value={formik}>
-            <Form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
-              <Grid container spacing={upMd ? 5 : 2}>
-                <Grid item xs={12} md={4}>
+          
+              <Grid container spacing={upMd ? 5 : 2} style={{paddingLeft:'10px'}}>
+                {/* <Grid item xs={12} md={4}>
                   <PaymentBillingAddress formik={formik} />
-                </Grid>
-                <Grid item xs={12} md={4}>
+                </Grid> */}
+                <Grid item xs={12} md={8}>
                   <PaymentMethods formik={formik} />
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <PaymentSummary formik={formik} />
                 </Grid>
               </Grid>
-            </Form>
+          
           </FormikProvider>
         </Card>
       </Container>
     </RootStyle>
+    </>
   );
 }

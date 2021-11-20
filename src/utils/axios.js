@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import conf from '../constants/config';
 // ----------------------------------------------------------------------
-const baseurl = conf.REACT_APP_ENDPOINT;
+const baseurl = process.env.REACT_APP_ENDPOINT;
 
 // const axiosInstance = axios.create();
 // axiosInstance.interceptors.response.use(
