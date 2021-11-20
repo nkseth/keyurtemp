@@ -12,6 +12,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import PaymentIcon from '@mui/icons-material/Payment';
 
+
  const BasicPopover=({user})=> {
   const [anchorEl, setAnchorEl] = React.useState(null);
 const history=useNavigate()
@@ -32,7 +33,7 @@ const Logoutclick= async()=>{
    
         await m.user.logout().then(()=>{
         
-          history.push('/')
+          history('/')
          document.location.reload()
         })
       

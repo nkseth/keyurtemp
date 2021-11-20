@@ -78,7 +78,7 @@ export default function Router() {
     },
 
     {
-      path: "marketplace",
+      path: "/",
       element: (
         <AuthGuard>
           <MarketPlace />
@@ -101,6 +101,14 @@ export default function Router() {
         </AuthGuard>
       ),
     },
+    {
+      path: "subscriptions",
+      element: (
+        <AuthGuard>
+          <Subscriptions />
+        </AuthGuard>
+      ),
+    },
 
     {
       path: "profile",
@@ -115,6 +123,14 @@ export default function Router() {
       element: (
         <AuthGuard>
           <Orders />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "companies",
+      element: (
+        <AuthGuard>
+          <Companies />
         </AuthGuard>
       ),
     },
@@ -207,7 +223,7 @@ export default function Router() {
       ],
     },
     {
-      path: "/",
+      path: "/Prospect",
       element: <Prospect />,
       children: [
         { element: <LandingPage /> },
@@ -282,14 +298,20 @@ const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
 const Register = Loadable(
   lazy(() => import("../pages/authentication/Register"))
 );
-const Prospect = Loadable(
-  lazy(() => import("../pages/authentication/Prospect"))
-);
+const Prospect = Loadable(lazy(()=>import("../pages/authentication/Prospect")))
+
 
 const Createcompany = Loadable(
   lazy(() => import("../pages/createcompany/cc"))
 );
 
+const Companies = Loadable(
+  lazy(() => import("../pages/companies/companies.js"))
+);
+
+const Subscriptions = Loadable(
+  lazy(() => import("../pages/Subscriptions/subscriptions"))
+);
 const ResetPassword = Loadable(
   lazy(() => import("../pages/authentication/ResetPassword"))
 );
