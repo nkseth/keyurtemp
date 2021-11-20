@@ -54,7 +54,7 @@ export default function Prospect() {
       <MHidden width="mdDown">
         <SectionStyle>
           {/* { <img alt="SimpleAccounts Logo" src="/static/illustrations/SimpleAccounts-Logo.jpg" /> } */}
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} style={{ wordWrap: "break-word" }}>
             Manage your accounts simply and more effectively with SimpleAccounts
           </Typography>
           <img
@@ -68,10 +68,10 @@ export default function Prospect() {
         <ContentStyle>
           <Box sx={{ mb: 5, display: "flex", alignItems: "center" }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h4" gutterBottom style={{ wordWrap: "break-word" }}>
                 {showProspect ? "Bravo" : "Get started absolutely free."}
               </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
+              <Typography sx={{ color: "text.secondary" }} style={{ wordWrap: "break-word" }}>
                 {showProspect
                   ? "You made it, congratulations!"
                   : "Free for early birds. No credit card needed."}
@@ -94,6 +94,7 @@ export default function Prospect() {
                 variant="body2"
                 align="center"
                 sx={{ color: "text.secondary", mt: 3 }}
+				style={{ wordWrap: "break-word" }}
               >
                 By prospecting, I agree to these&nbsp;
                 <Link underline="always" color="text.primary" href="#">
@@ -113,6 +114,7 @@ export default function Prospect() {
                 variant="body2"
                 align="center"
                 sx={{ color: "text.secondary", mt: 3 }}
+				style={{ wordWrap: "break-word" }}
               >
                 Check your inbox for the SimpleAccounts invite in a short time.
               </Typography>

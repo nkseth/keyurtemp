@@ -3,11 +3,12 @@ import  { useCallback } from 'react'
 
 import { MIconButton } from '../../@material-extend';
 import axiosInstance from "../../../utils/axios";
-import { Typography, Button,Card ,CardContent } from '@mui/material';
+import { Typography, Link, Card, CardContent } from '@mui/material';
 import {Link as RouterLink} from "react-router-dom";
 import {SeoIllustration} from "../../../assets";
 import { styled } from '@mui/material/styles';
-
+import SvgIconStyle from "../../SvgIconStyle";
+import { Icon } from '@iconify/react';
 
 export default function ProspectFormCount() {
     const RootStyle = styled(Card)(({ theme }) => ({
@@ -41,10 +42,19 @@ debugger
             }}
         >
             <Typography gutterBottom variant="h4">
-                Welcome
+                Welcome,
             </Typography>
-            <Typography
-                bgcolor={"grey"} component="h1" variant="h5">You are <span  style={{textDecoration:"underline", fontSize:"1.5rem", textDecorationColor:"darkorange", textEmphasisColor:"darkorange", color:"darkorange"}}>{count}th</span> in the waitlist to explore the future of accounting.</Typography>
+			<Typography
+				bgcolor={"grey"} component="h1" variant="h5" style={{ wordWrap: "break-word" }}>You are <span  style={{textDecoration:"underline", fontSize:"1.5rem", textDecorationColor:"darkorange", textEmphasisColor:"darkorange", color:"darkorange"}}>{count}th</span> in the waitlist to explore the future of accounting.</Typography>
+
+				<br/>
+
+			<Typography
+				bgcolor={"grey"} component="h1" variant="h5" style={{ wordWrap: "break-word" }}>
+				<Link color="#2064D8" href="https://www.simpleaccounts.io/schedule-your-demo/">
+					<Icon icon="fa:calendar" />{" "}Book a demo with us.
+				</Link>
+			</Typography>
         </CardContent>
     <SeoIllustration
         sx={{

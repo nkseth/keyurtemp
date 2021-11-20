@@ -23,12 +23,5 @@ export const magicConfig = {
   publicKey: process.env.REACT_APP_MAGIC_PUBLIC_KEY,
 };
 
-// We dont need this. We got these available in /constants/config.js
-// export default {
-// 	REACT_APP_MAGIC_PUBLIC_KEY: process.env.REACT_APP_MAGIC_PUBLIC_KEY,
-// 	REACT_APP_ENDPOINT: process.env.REACT_APP_ENDPOINT,
-// 	REACT_APP_CAPTCHA: process.env.REACT_APP_CAPTCHA,
-// };
-
 export const mapConfig = process.env.REACT_APP_MAP_MAPBOX;
 export const googleAnalyticsConfig = process.env.REACT_APP_GA_MEASUREMENT_ID;
