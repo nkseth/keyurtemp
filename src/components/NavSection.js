@@ -61,7 +61,7 @@ function NavItem({ item, isShow }) {
   const theme = useTheme();
   const { pathname } = useLocation();
   const { title, path, icon, info, children } = item;
-  const isActiveRoot = path ? !!matchPath({ path, end: false }, pathname) : false;
+  const isActiveRoot = path==='/'?false:path ? !!matchPath({ path, end: false }, pathname) : false;
 
   const [open, setOpen] = useState(isActiveRoot);
 
@@ -184,7 +184,7 @@ export default function NavSection({ navConfig, isShow = true, ...other }) {
           <List key={subheader} disablePadding>
             {isShow && <ListSubheaderStyle>{subheader}</ListSubheaderStyle>}
             {items.map((item) => (
-              <NavItem key={item.title} item={item} isShow={isShow} />
+              <NavItem key={item.title} item={item} isShow={isShow} s />
             ))}
           </List>
         );

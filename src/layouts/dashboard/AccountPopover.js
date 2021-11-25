@@ -17,6 +17,7 @@ import useIsMountedRef from '../../hooks/useIsMountedRef';
 import { MIconButton } from '../../components/@material-extend';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
+import { Magic } from 'magic-sdk';
 
 // ----------------------------------------------------------------------
 
@@ -42,10 +43,10 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
-  const navigate = useNavigate();
+  const history = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const isMountedRef = useIsMountedRef();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -56,17 +57,10 @@ export default function AccountPopover() {
   };
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/');
-      if (isMountedRef.current) {
-        handleClose();
-      }
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Unable to logout', { variant: 'error' });
-    }
-  };
+    const m = new Magic(process.env.REACT_APP_MAGIC_PUBLIC_KEY);
+     await m.user.logout().then(()=>{history('/')
+             document.location.reload() })
+  }
 
   return (
     <>
@@ -90,9 +84,9 @@ export default function AccountPopover() {
           })
         }}
       >
-        <MyAvatar />
+        <MyAvatar/ >
       </MIconButton>
-
+{console.log(user)}
       <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current} sx={{ width: 220 }}>
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>

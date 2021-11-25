@@ -226,11 +226,7 @@ export const companyRows=[
 
 ];
 export const companyHeadCells=[
-    {
-      id: 'companyId',
-      label: 'Company id',
-      doSorting:false,
-    },
+   
     {
       id: 'companyName',
       label: 'Company Name',

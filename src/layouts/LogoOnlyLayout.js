@@ -20,8 +20,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
  display: 'flex',
  
  justifyContent: 'space-between',
-  position:'absolute',
-  zIndex:100,
+  position: 'absolute',
   padding: theme.spacing(3, 3, 0),
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(3)

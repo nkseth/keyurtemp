@@ -293,8 +293,8 @@ export default function EnhancedTable({rows , headCells}) {
 
       
   return (
-    <Box sx={{ width: '100%',boxShadow: '0 0 3px lightgray'}}>
-      <Paper sx={{ width: '100%', mb: 2 }} style={{boxShadow: '0 0 3px lightgray',borderRadius:'20px'}}>
+    <Box style={{ width: '100%',boxShadow: '20px 10px 35px lightgray'}}>
+      <Paper sx={{ width: '100%', mb: 2 }} style={{boxShadow: '0 0 3px lightgray'}}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
@@ -348,9 +348,11 @@ export default function EnhancedTable({rows , headCells}) {
                               // id={labelId}
                               // scope="row"
                               // padding="none"
-                              
+                             style={{fontSize:"1rem",FontWeight:'bold'}} 
                               >
+                              
                         {row[item.id]}
+                       
                       </TableCell>
                           )
                       })}
