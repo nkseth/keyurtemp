@@ -51,7 +51,7 @@ const onlogin= async(email)=>{
     await magic.auth.loginWithMagicLink({email}).then((res)=>{
    
     if(res)
-     history('/marketplace')
+     history('/dashboard')
 
     })
     .catch((err)=>{
@@ -72,7 +72,7 @@ const onlogin= async(email)=>{
 
       
        if(res)
-        history('/marketplace')
+        history('/dashboard')
    
        })
        .catch((err)=>{

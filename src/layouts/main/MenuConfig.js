@@ -17,7 +17,7 @@ const menuConfig = [
   {
     title: 'Home',
     icon: <Icon icon={homeFill} {...ICON_SIZE} />,
-    path: '/'
+    path: '/dashboard'
   },
   {
     title: 'Components',

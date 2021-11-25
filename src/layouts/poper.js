@@ -33,7 +33,7 @@ const Logoutclick= async()=>{
    
         await m.user.logout().then(()=>{
         
-          history('/')
+          history('/marketplace')
          document.location.reload()
         })
       
@@ -54,7 +54,7 @@ textDecoration: 'none',
       
       <Avatar  aria-describedby={id} style={{cursor:'pointer',marginLeft:'10px',maginRight:'10px'}}  onClick={handleClick}
       sx={{ bgcolor: "orange",color:'white'  }}
-      >{ user[0].toUpperCase()}</Avatar>
+      >{ user?user[0].toUpperCase():null}</Avatar>
      
       <Popover
         id={id}

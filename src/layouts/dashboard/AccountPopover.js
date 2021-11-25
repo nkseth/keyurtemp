@@ -58,7 +58,7 @@ export default function AccountPopover() {
 
   const handleLogout = async () => {
     const m = new Magic(process.env.REACT_APP_MAGIC_PUBLIC_KEY);
-     await m.user.logout().then(()=>{history('/')
+     await m.user.logout().then(()=>{history('/marketplace')
              document.location.reload() })
   }
 

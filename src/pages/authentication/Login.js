@@ -24,7 +24,7 @@ import Page from "../../components/Page";
 import { MHidden } from "../../components/@material-extend";
 import { LoginForm } from "../../components/authentication/login";
 import AuthFirebaseSocials from "../../components/authentication/AuthFirebaseSocial";
-
+import { useNavigate } from "react-router";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -56,10 +56,12 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 export default function Login() {
   const { method, login } = useAuth();
+const history = useNavigate()
 
   const handleLoginAuth0 = async () => {
     try {
-      await login();
+      await login()
+        history("/dashboard")
     } catch (error) {
       console.error(error);
     }

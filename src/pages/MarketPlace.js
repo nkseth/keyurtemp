@@ -38,6 +38,8 @@ const RootStyle = styled(Page)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MarketPlace() {
+
+ 
   const dispatch = useDispatch();
   const plans = useSelector((state) => state.pricing.plans);
   const addons = useSelector((state) => state.pricing.addons);
@@ -155,9 +157,9 @@ const filterclicked=(e,type)=>{
   return (
     <>
     <Loading/>
-    <LogoOnlyLayout />
+    
       <RootStyle title="Market Place | SimpleAccounts">
-     
+      <LogoOnlyLayout />
         <Container maxWidth="lg">
           <Typography variant="h3" align="center" paragraph>
             Flexible plans for your

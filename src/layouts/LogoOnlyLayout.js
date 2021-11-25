@@ -34,8 +34,9 @@ export default function LogoOnlyLayout() {
   const {user}=useAuth()
   return (
     <>
+   
       <HeaderStyle>
-        <RouterLink to="/">
+        <RouterLink to="/marketplace">
           <Logo />
         </RouterLink>
       <Box style={{display: 'flex'}}> 
@@ -51,7 +52,7 @@ export default function LogoOnlyLayout() {
         </RouterLink>
         </Badge>
 
- <Popper user={user.email}  />
+ <Popper user={user?.email}  />
       </Box>
       
       </HeaderStyle>

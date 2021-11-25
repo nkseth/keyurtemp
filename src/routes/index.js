@@ -78,7 +78,7 @@ export default function Router() {
     },
 
     {
-      path: "/",
+      path: "/marketplace",
       element: (
         <AuthGuard>
           <MarketPlace />
@@ -210,7 +210,7 @@ export default function Router() {
     // Main Routes
     {
       path: "*",
-      element: <LogoOnlyLayout />,
+      element:  <NotFound />,
       children: [
         { path: "coming-soon", element: <ComingSoon /> },
         { path: "maintenance", element: <Maintenance /> },
